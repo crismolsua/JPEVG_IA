@@ -1,0 +1,23 @@
+{
+  "name": "jpevg_ia",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crism/JPEVG_IA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crism/JPEVG_IA/issues"
+  },
+  "homepage": "https://github.com/crism/JPEVG_IA#readme",
+  "description": "",
+  "dependencies": {
+    "openai": "^5.3.0"
+  }
+}
