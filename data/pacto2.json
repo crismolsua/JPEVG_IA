@@ -1,0 +1,29 @@
+[
+  {
+    "codigo": "A1",
+    "tipo": "area",
+    "nombre": "Área 1: Formación profesional",
+    "descripcion": "Actividades formativas para profesionales en prevención de la violencia de género"
+  },
+  {
+    "codigo": "SA1.1",
+    "tipo": "subarea",
+    "nombre": "Subárea 1.1: Formación online",
+    "descripcion": "Cursos online para sensibilización sobre igualdad",
+    "area_codigo": "A1"
+  },
+  {
+    "codigo": "AC1.1.1",
+    "tipo": "actuacion",
+    "nombre": "Actuación 1.1.1: MOOC sobre igualdad",
+    "descripcion": "Desarrollo y difusión de cursos masivos abiertos en plataformas educativas",
+    "subarea_codigo": "SA1.1"
+  },
+  {
+    "codigo": "AC1.1.2",
+    "tipo": "actuacion",
+    "nombre": "Actuación 1.1.2: Talleres presenciales",
+    "descripcion": "Sesiones prácticas en institutos y centros de trabajo",
+    "subarea_codigo": "SA1.1"
+  }
+]

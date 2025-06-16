@@ -1,0 +1,17 @@
+[
+  {
+    "codigo": "EE1",
+    "nombre": "Eje 1: Prevención",
+    "descripcion": "Promover campañas de sensibilización y educación"
+  },
+  {
+    "codigo": "EM1.1",
+    "nombre": "Medida 1.1: Publicidad institucional",
+    "descripcion": "Difusión de mensajes en radio, TV y redes sociales"
+  },
+  {
+    "codigo": "EM1.2",
+    "nombre": "Medida 1.2: Formación continua",
+    "descripcion": "Cursos especializados para personal sanitario y educativo"
+  }
+]
