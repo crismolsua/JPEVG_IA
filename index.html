@@ -13,59 +13,69 @@
 </head>
 <body>
   <h1>Justifica PEVG IA</h1>
-  <p>Pega la descripciÛn de tu proyecto:</p>
-  <textarea id="inputText" placeholder="DescripciÛn..."></textarea>
+  <p>Pega la descripci√≥n de tu proyecto:</p>
+  <textarea id="inputText" placeholder="Descripci√≥n..."></textarea>
   <button id="btn">Justificar</button>
 
   <section>
-    <h2>Apartado 2 ñ Ejes y Medidas (Pacto I)</h2>
+    <h2>Apartado 2 ‚Äì Ejes y Medidas (Pacto I)</h2>
     <div id="out2"></div>
   </section>
   <section>
-    <h2>Apartado 3 ñ ¡reas/Sub·reas/Actuaciones (Pacto II)</h2>
+    <h2>Apartado 3 ‚Äì √Åreas/Sub√°reas/Actuaciones (Pacto II)</h2>
     <div id="out3"></div>
   </section>
   <section>
-    <h2>Apartado 4 ñ Ejes y Medidas (Estrategia Estatal)</h2>
+    <h2>Apartado 4 ‚Äì Ejes y Medidas (Estrategia Estatal)</h2>
     <div id="out4"></div>
   </section>
 
   <script>
-    document.getElementById('btn').onclick = async () => {
-      const texto = document.getElementById('inputText').value;
-      const res   = await fetch('/api/ai-justify', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ texto })
-      });
-      const { apartado2, apartado3, apartado4, raw } = await res.json();
-      if (raw) {
-        document.body.insertAdjacentHTML('beforeend',
-          `<pre style="color:red">AI no devolviÛ JSON v·lido:\n${raw}</pre>`);
+  document.getElementById('btn').onclick = async () => {
+    const texto = document.getElementById('inputText').value;
+    // Llamada al endpoint serverless que invoca a OpenAI
+    const res = await fetch('/api/ai-justify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ texto })
+    });
+    const data = await res.json();
+
+    // Si la IA devolvi√≥ raw en lugar de JSON v√°lido, lo mostramos para debug
+    if (data.raw) {
+      document.body.insertAdjacentHTML(
+        'beforeend',
+        `<pre style="color:red">AI no devolvi√≥ JSON v√°lido:\n${data.raw}</pre>`
+      );
+      return;
+    }
+
+    // Funci√≥n para pintar cada apartado
+    const pinta = (id, arr) => {
+      const cont = document.getElementById(id);
+      cont.innerHTML = '';
+      if (!arr || !arr.length) {
+        cont.innerHTML = '<p><em>No hay sugerencias.</em></p>';
         return;
       }
-      const pintar = (id, arr) => {
-        const cont = document.getElementById(id);
-        cont.innerHTML = '';
-        if (!arr || !arr.length) {
-          cont.innerHTML = '<p><em>No hay sugerencias.</em></p>';
-          return;
-        }
-        arr.forEach(o => {
-          const div = document.createElement('div');
-          div.className = 'item';
-          div.innerHTML = `
-            <div><span class="codigo">CÛdigo:</span> ${o.codigo}</div>
-            <div><span class="codigo">Nombre:</span> ${o.nombre}</div>
-            <div><span class="codigo">DescripciÛn:</span> ${o.descripcion}</div>
-          `;
-          cont.appendChild(div);
-        });
-      };
-      pintar('out2', apartado2);
-      pintar('out3', apartado3);
-      pintar('out4', apartado4);
+      arr.forEach(o => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <div><span class="codigo">C√≥digo:</span> ${o.codigo}</div>
+          <div><span class="codigo">Nombre:</span> ${o.nombre}</div>
+          <div><span class="codigo">Descripci√≥n:</span> ${o.descripcion}</div>
+        `;
+        cont.appendChild(div);
+      });
     };
-  </script>
+
+    // Pintamos los tres apartados que devuelve la IA
+    pinta('out2', data.apartado2);
+    pinta('out3', data.apartado3);
+    pinta('out4', data.apartado4);
+  };
+</script>
+
 </body>
 </html>

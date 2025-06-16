@@ -1,0 +1,12 @@
+[
+  {
+    "codigo": "E1",
+    "nombre": "Eje 1: Prevención",
+    "descripcion": "Actividades de sensibilización en colegios"
+  },
+  {
+    "codigo": "M1.1",
+    "nombre": "Medida 1.1: Campañas escolares",
+    "descripcion": "Charlas en institutos para sensibilizar sobre igualdad"
+  }
+]
