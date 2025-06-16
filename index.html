@@ -1,8 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="utf-8"><title>Justifica PEVG IA</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Justifica PEVG IA</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 1rem }
+    textarea { width: 100%; height: 120px }
+    section { margin-top: 1.5rem }
+    .item { border: 1px solid #ddd; padding: .5rem; margin: .3rem 0 }
+    .codigo { font-weight: bold }
+  </style>
+</head>
 <body>
   <h1>Justifica PEVG IA</h1>
-  <p>En construcci¢n.</p>
+  <p>Pega la descripción de tu proyecto:</p>
+  <textarea id="inputText" placeholder="Descripción..."></textarea>
+  <button id="btn">Justificar</button>
+
+  <section>
+    <h2>Apartado 2 – Ejes y Medidas (Pacto I)</h2>
+    <div id="out2"></div>
+  </section>
+  <section>
+    <h2>Apartado 3 – Áreas/Subáreas/Actuaciones (Pacto II)</h2>
+    <div id="out3"></div>
+  </section>
+  <section>
+    <h2>Apartado 4 – Ejes y Medidas (Estrategia Estatal)</h2>
+    <div id="out4"></div>
+  </section>
+
+  <script>
+    document.getElementById('btn').onclick = async () => {
+      const texto = document.getElementById('inputText').value;
+      const res   = await fetch('/api/ai-justify', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ texto })
+      });
+      const { apartado2, apartado3, apartado4, raw } = await res.json();
+      if (raw) {
+        document.body.insertAdjacentHTML('beforeend',
+          `<pre style="color:red">AI no devolvió JSON válido:\n${raw}</pre>`);
+        return;
+      }
+      const pintar = (id, arr) => {
+        const cont = document.getElementById(id);
+        cont.innerHTML = '';
+        if (!arr || !arr.length) {
+          cont.innerHTML = '<p><em>No hay sugerencias.</em></p>';
+          return;
+        }
+        arr.forEach(o => {
+          const div = document.createElement('div');
+          div.className = 'item';
+          div.innerHTML = `
+            <div><span class="codigo">Código:</span> ${o.codigo}</div>
+            <div><span class="codigo">Nombre:</span> ${o.nombre}</div>
+            <div><span class="codigo">Descripción:</span> ${o.descripcion}</div>
+          `;
+          cont.appendChild(div);
+        });
+      };
+      pintar('out2', apartado2);
+      pintar('out3', apartado3);
+      pintar('out4', apartado4);
+    };
+  </script>
 </body>
 </html>
